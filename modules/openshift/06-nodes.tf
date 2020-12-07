@@ -6,7 +6,7 @@ resource "aws_key_pair" "keypair" {
 
 //  Create the master userdata script.
 data "template_file" "setup-master" {
-  template = "${file("${path.module}/files/setup-master.sh")}"
+  template = "${file("modules/openshift/files/setup-master.sh")}"
   vars = {
     availability_zone = "${data.aws_availability_zones.azs.names[0]}"
   }

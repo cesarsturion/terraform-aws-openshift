@@ -1,3 +1,8 @@
+infrastructure-plan:
+	# Get the modules, create the infrastructure.
+	terraform init && terraform get && terraform plan
+
+
 infrastructure:
 	# Get the modules, create the infrastructure.
 	terraform init && terraform get && terraform apply -auto-approve
