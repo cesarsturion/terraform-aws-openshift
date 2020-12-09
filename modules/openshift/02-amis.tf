@@ -52,3 +52,40 @@ data "aws_ami" "amazonlinux" {
     values = ["amzn-ami-hvm-*"]
   }
 }
+
+data "aws_ami" "ubuntu-18_04" {
+  most_recent = true
+  owners = ["${var.ubuntu_account_number}"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+  }
+}
+
+data "aws_ami" "centos_7_x64" {
+  most_recent = true
+
+  owners = ["aws-marketplace"] // Centos account ID
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "product-code"
+    values = ["aw0evgkw8e5c1q413zgy5pjce"]
+  }
+
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["CentOS Linux 7 x86_64 HVM EBS *"]
+  }
+}

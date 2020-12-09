@@ -31,3 +31,7 @@ variable "cluster_id" {
 }
 
 data "aws_availability_zones" "azs" {}
+
+variable "ubuntu_account_number" {
+  default = "099720109477"
+}

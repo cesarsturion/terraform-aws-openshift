@@ -6,7 +6,7 @@ resource "aws_key_pair" "keypair" {
 
 //  Create the master userdata script.
 data "template_file" "setup-master" {
-  template = "${file("modules/openshift/files/setup-master.sh")}"
+  template = "${file("./modules/openshift/files/setup-master.sh")}"
   vars = {
     availability_zone = "${data.aws_availability_zones.azs.names[0]}"
   }
@@ -20,7 +20,7 @@ resource "aws_eip" "master_eip" {
 
 //  Launch configuration for the consul cluster auto-scaling group.
 resource "aws_instance" "master" {
-  ami                  = "${data.aws_ami.rhel7_5.id}"
+  ami                  = "${data.aws_ami.centos_7_x64.id}"
   # Master nodes require at least 16GB of memory.
   instance_type        = "m4.xlarge"
   subnet_id            = "${aws_subnet.public-subnet.id}"
@@ -60,7 +60,7 @@ resource "aws_instance" "master" {
 
 //  Create the node userdata script.
 data "template_file" "setup-node" {
-  template = "${file("${path.module}/files/setup-node.sh")}"
+  template = "${file("./modules/openshift//files/setup-node.sh")}"
   vars = {
     availability_zone = "${data.aws_availability_zones.azs.names[0]}"
   }
@@ -80,7 +80,7 @@ resource "aws_eip" "node2_eip" {
 //  Create the two nodes. This would be better as a Launch Configuration and
 //  autoscaling group, but I'm keeping it simple...
 resource "aws_instance" "node1" {
-  ami                  = "${data.aws_ami.rhel7_5.id}"
+  ami                  = "${data.aws_ami.centos_7_x64.id}"
   instance_type        = "${var.amisize}"
   subnet_id            = "${aws_subnet.public-subnet.id}"
   iam_instance_profile = "${aws_iam_instance_profile.openshift-instance-profile.id}"
@@ -118,7 +118,7 @@ resource "aws_instance" "node1" {
 }
 
 resource "aws_instance" "node2" {
-  ami                  = "${data.aws_ami.rhel7_5.id}"
+  ami                  = "${data.aws_ami.centos_7_x64.id}"
   instance_type        = "${var.amisize}"
   subnet_id            = "${aws_subnet.public-subnet.id}"
   iam_instance_profile = "${aws_iam_instance_profile.openshift-instance-profile.id}"
